@@ -6,3 +6,4 @@ export { default as Restaurants } from "./restaurants.png";
 export { default as NotFound } from "./NotFound.png";
 export { default as Travel } from "./travel.png"
 export { default as TravelImage } from "./travelimage.gif"
+export { default as Elearning } from "./elearning.png"
