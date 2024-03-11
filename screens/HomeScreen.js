@@ -11,7 +11,7 @@ const HomeScreen = () => {
         navigation.setOptions({
           headerShown: false,
         });
-      }, [navigation]);
+      }, []);
 
   return (
         <SafeAreaView className="bg bg-white flex-1 relative">

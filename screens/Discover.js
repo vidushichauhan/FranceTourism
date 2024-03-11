@@ -1,34 +1,48 @@
 import { View,Text, SafeAreaView, Image, TouchableOpacity,ActivityIndicator } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons';
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { Attractions, Avatar } from '../assets/index';
+import { Attractions, Avatar,WishList } from '../assets/index';
 import { Hotels } from '../assets/index';
 import { ScrollView } from 'react-native';
 import { Restaurants } from "../assets/index"
 import MenuContainer from '../components/MenuContainer';
 import ItemCarDontainer from '../components/ItemCarDontainer';
+import { getPlacesData } from '../api';
+
 
 const Discover = () => {
     const navigation = useNavigation();
 
     const[type,setType]=useState("restaurants")
     const[isLoading,setIsLoading]=useState(false)
-    const[mainData,setMainData]=useState({})
+    const[mainData,setMainData]=useState([])
     useLayoutEffect(() => {
         navigation.setOptions({
           headerShown: false,
         });
       }, [navigation]);
+
+    useEffect(()=>{setIsLoading(true);
+       getPlacesData().then( data=>{
+        setMainData(data);
+        setInterval(()=>{setIsLoading(false)},1500)
+       })
+      },[])
+
+
   return (
     <SafeAreaView className="flex-1 bg-white relative">
       <View className="flex-row items-center justify-between px-4">
       <View>
-       <Text className="text-[40px] text-[#0B646B] font-bold">Discover</Text>
-       <Text className="text-[#527283] text-[30px]">The Beauty of France</Text>
+       <Text className="text-[30px] text-[#0B646B] font-bold">Discover</Text>
+       <Text className="text-[#527283] text-[20px]">The Beauty of France</Text>
       </View>
-      <View className="w-16 h-16 bg-gray-400 rounded-md item-center justify-center shadow-lg">
+      <TouchableOpacity className="w-16 h-16 rounded-md item-center justify-center shadow-lg">
+      <Image source={WishList} className="w-full h-full rounded-md object-cover"/>
+      </TouchableOpacity>
+      <View className="w-16 h-16 bg-white rounded-md item-center justify-center shadow-lg">
       <Image source={Avatar} className="w-full h-full rounded-md object-cover"/>
       </View>
       </View>
@@ -47,7 +61,7 @@ const Discover = () => {
         console.log(details?.geometry?.viewport);
       }}
       query={{
-        key: 'YOUR API KEY',
+        key: 'Your API Key',
         language: 'en',
       }}
     />
@@ -87,15 +101,24 @@ const Discover = () => {
             >Top Tips</Text>
             <TouchableOpacity className="flex-row justify-center space-x-2">
             <Text className="text-[#A0C4C7] text-[20px] font-bold"
-            >Explore</Text>
+            >Explore France</Text>
             <FontAwesome name="long-arrow-right" size={24} color="#A0C4C7" />
             </TouchableOpacity>
           </View >
-          <View className="px-1 mt-8 flex-row items-center justify-evenly ">
-            {mainData?.length>0?(
+          <View className="px-1 mt-8 flex-row items-center flex-wrap justify-evenly ">
+            {mainData?.length > 0 ?(
               <>
-          <ItemCarDontainer key={"101"} imageSrc={"https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg"} title="something" location="Doha"/>
-          <ItemCarDontainer key={"102"} imageSrc={"https://cdn.pixabay.com/photo/2012/11/21/10/24/building-66789_1280.jpg"} title="sample" location="Qatar"/>
+              {mainData?.map((data,i)=>(
+                <ItemCarDontainer key={i} 
+                imageSrc={data?.photo?.images?.medium?.url ?
+                  data?.photo?.images?.medium?.url :
+                  "https://cdn.pixabay.com/photo/2017/06/21/09/19/spoon-2426623_1280.jpg"
+                } 
+                title = {data?.name}
+                location = {data?.location_string}
+                data = {data}/>
+              )) }
+
           </>):(<>
           <View className="w-full h-[600px]">
           <Text className="text-[40px] text-[#2C7379] w-200 font-bold item-center px-20 mt-0">Oops...!!</Text>
