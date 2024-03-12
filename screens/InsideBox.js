@@ -9,18 +9,26 @@ import {
   import React, { useLayoutEffect,useState } from "react";
   import { useNavigation } from "@react-navigation/native";
   import { FontAwesome, FontAwesome5, MaterialIcons } from "@expo/vector-icons";
+  import { savingLikedData } from '../api/callingExposedApis';
+
   
   const InsideBox = ({ route }) => {
     const navigation = useNavigation();
   
     const [isLiked, setLiked] = useState(false);
 
-    const handleHeart = () => {
-      setLiked(!isLiked);
+    const handleHeart = async () => {
+      try {
+        setLiked(!isLiked);
+        savingLikedData(route.params);
+        // Additional logic after posting data if needed
+      } catch (error) {
+        console.error('Error handling heart:', error);
+      }
     };
 
     const data = route?.params?.param;
-    console.log('route.params:', route.params);
+    //console.log('route.params:', route.params);
     useLayoutEffect(() => {
       navigation.setOptions({
         headerShown: false,

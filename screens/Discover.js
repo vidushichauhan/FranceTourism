@@ -39,7 +39,7 @@ const Discover = () => {
        <Text className="text-[30px] text-[#0B646B] font-bold">Discover</Text>
        <Text className="text-[#527283] text-[20px]">The Beauty of France</Text>
       </View>
-      <TouchableOpacity className="w-16 h-16 rounded-md item-center justify-center shadow-lg">
+      <TouchableOpacity onPress ={() => navigation.navigate("WishListScreen")} className="w-16 h-16 rounded-md item-center justify-center shadow-lg">
       <Image source={WishList} className="w-full h-full rounded-md object-cover"/>
       </TouchableOpacity>
       <View className="w-16 h-16 bg-white rounded-md item-center justify-center shadow-lg">
