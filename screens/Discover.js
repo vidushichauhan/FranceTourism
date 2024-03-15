@@ -26,6 +26,7 @@ const Discover = () => {
 
     useEffect(()=>{setIsLoading(true);
        getPlacesData().then( data=>{
+
         setMainData(data);
         setInterval(()=>{setIsLoading(false)},1500)
        })
@@ -99,11 +100,16 @@ const Discover = () => {
           <View className="flex-row justify-between px-4 mt-8">
             <Text className="text-[#2C7379] text-[28px] font-bold"
             >Top Tips</Text>
-            <TouchableOpacity className="flex-row justify-center space-x-2">
-            <Text className="text-[#A0C4C7] text-[20px] font-bold"
-            >Explore France</Text>
-            <FontAwesome name="long-arrow-right" size={24} color="#A0C4C7" />
-            </TouchableOpacity>
+            <TouchableOpacity className = "flex-row items-center justify-between space-x-2"
+                            
+                            onPress={()=>navigation.navigate("Explore")}
+                            
+                            >
+                            <Text className = "text-[#A0C4C7] text-[20px] font-bold">
+                                Explore France 
+                            </Text>
+                            <FontAwesome name="long-arrow-right" size={24} color="#A0C4C7" />
+                            </TouchableOpacity>
           </View >
           <View className="px-1 mt-8 flex-row items-center flex-wrap justify-evenly ">
             {mainData?.length > 0 ?(

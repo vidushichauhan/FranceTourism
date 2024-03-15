@@ -1,4 +1,6 @@
-{
+{ 
+  "name": "France_Tourism",
+  "displayName": "France Tourism",
   "expo": {
     "name": "France_Tourism",
     "slug": "France_Tourism",

@@ -16,7 +16,7 @@ mongoose.connect('mongodb://localhost:27017/FranceTourism', { useNewUrlParser: t
 
 // Set up a basic schema for your data
 const dataSchema = new mongoose.Schema({
-  param: Object
+  data: []
 });
 
 const DataModel = mongoose.model('wishlists', dataSchema);
